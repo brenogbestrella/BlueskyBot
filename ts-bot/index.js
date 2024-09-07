@@ -102,7 +102,6 @@ function main() {
 }
 main();
 // Run this on a cron job
-var scheduleExpressionMinute = '* * * * *'; // Run once every minute for testing
-var scheduleExpression = '0 */3 * * *'; // Run once every three hours in prod
-var job = new cron_1.CronJob(scheduleExpressionMinute, main); // change to scheduleExpressionMinute for testing
+var scheduleExpression = '0 0 * * *'; // Run every day at midnight
+var job = new cron_1.CronJob(scheduleExpression, main);
 job.start();
