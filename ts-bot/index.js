@@ -38,7 +38,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var BskyAgent = require('@atproto/api').BskyAgent;
 var dotenv = require("dotenv");
-var cron_1 = require("cron");
 var process = require("process");
 var fs_1 = require("fs");
 dotenv.config();
@@ -102,6 +101,6 @@ function main() {
 }
 main();
 // Run this on a cron job
-var scheduleExpression = '0 0 * * *'; // Run every day at midnight
-var job = new cron_1.CronJob(scheduleExpression, main);
-job.start();
+// const scheduleExpression = '0 0 * * *'; // Run every day at midnight
+// const job = new CronJob(scheduleExpression, main); 
+// job.start();
