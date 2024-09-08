@@ -76,7 +76,7 @@ export async function main() {
     }
 }
 
-// main();
+main();
 
 
 // Run this on a cron job

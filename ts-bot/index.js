@@ -134,7 +134,7 @@ function main() {
         });
     });
 }
-// main();
+main();
 // Run this on a cron job
 // const scheduleExpression = '0 0 * * *'; // Run every day at midnight
 // const job = new CronJob(scheduleExpression, main); 
