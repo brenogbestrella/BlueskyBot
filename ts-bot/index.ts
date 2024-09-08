@@ -20,7 +20,7 @@ const agent = new BskyAgent({
 })
 
 
-async function main() {
+export async function main() {
     await agent.login({ identifier: process.env.BLUESKY_USERNAME!, password: process.env.BLUESKY_PASSWORD!});
 
     const fileData = await readFileAsUint8Array(image)
@@ -47,7 +47,7 @@ async function main() {
     console.log("Just posted!")
 }
 
-main();
+// main();
 
 
 // Run this on a cron job

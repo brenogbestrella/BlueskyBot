@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.main = main;
 var BskyAgent = require('@atproto/api').BskyAgent;
 var dotenv = require("dotenv");
 var process = require("process");
@@ -99,7 +100,7 @@ function main() {
         });
     });
 }
-main();
+// main();
 // Run this on a cron job
 // const scheduleExpression = '0 0 * * *'; // Run every day at midnight
 // const job = new CronJob(scheduleExpression, main); 
