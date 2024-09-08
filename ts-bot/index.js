@@ -41,18 +41,32 @@ var BskyAgent = require('@atproto/api').BskyAgent;
 var dotenv = require("dotenv");
 var process = require("process");
 var fs_1 = require("fs");
+var path = require('path');
 dotenv.config();
-var image = './public/img/GWRaCraWwAAzlr8.jpg';
-var encoding = 'image/jpg';
+var filePath = path.join(__dirname, 'public', 'img', 'GWRaCraWwAAzlr8.jpg');
+var image = filePath;
+var encoding = 'image/jpeg';
 function readFileAsUint8Array(filePath) {
     return __awaiter(this, void 0, void 0, function () {
-        var buffer;
+        var buffer, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, fs_1.promises.readFile(filePath)];
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, fs_1.promises.readFile(filePath)];
                 case 1:
                     buffer = _a.sent();
                     return [2 /*return*/, new Uint8Array(buffer)];
+                case 2:
+                    error_1 = _a.sent();
+                    if (error_1 instanceof Error) {
+                        console.error('Erro reading the file:', error_1.message);
+                    }
+                    else {
+                        console.error('Unknown Error while reading the file:', error_1);
+                    }
+                    throw error_1;
+                case 3: return [2 /*return*/];
             }
         });
     });

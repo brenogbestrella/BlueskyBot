@@ -3,15 +3,25 @@ import * as dotenv from 'dotenv';
 import { CronJob } from 'cron';
 import * as process from 'process';
 import { promises as fs } from 'fs';
+const path = require('path');
 
 dotenv.config();
-
-const image = './public/img/GWRaCraWwAAzlr8.jpg';
-const encoding = 'image/jpg';
+const filePath = path.join(__dirname, 'public', 'img', 'GWRaCraWwAAzlr8.jpg')
+const image = filePath;
+const encoding = 'image/jpeg';
 
 async function readFileAsUint8Array(filePath: string): Promise<Uint8Array> {
-    const buffer = await fs.readFile(filePath);
-    return new Uint8Array(buffer);
+    try {
+        const buffer = await fs.readFile(filePath);
+        return new Uint8Array(buffer);
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error('Erro reading the file:', error.message);
+        } else {
+            console.error('Unknown Error while reading the file:', error);
+        }
+        throw error;
+    }
 }
 
 // Create a Bluesky Agent 
