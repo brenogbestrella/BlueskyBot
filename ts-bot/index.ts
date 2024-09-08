@@ -29,32 +29,51 @@ const agent = new BskyAgent({
     service: 'https://bsky.social',
 })
 
+const username = process.env.BLUESKY_USERNAME;
+const password = process.env.BLUESKY_PASSWORD
 
 export async function main() {
-    await agent.login({ identifier: process.env.BLUESKY_USERNAME!, password: process.env.BLUESKY_PASSWORD!});
+    try {
 
-    const fileData = await readFileAsUint8Array(image)
-    
-    const { data } = await agent.uploadBlob(fileData, { encoding });
+        await agent.login({ identifier: username, password: password});
 
-    await agent.post({
-        text: "🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨",
-        embed: {
-            $type: 'app.bsky.embed.images',
-            images: [
-                {
-                    alt: 'Imagem de um mico leão dourado com as palavras: MEIA NOITE!!, HORÁRIO OFICIAL DO ÓLEO DE MACACO',
-                    image: data.blob,
-                    aspecRatio: {
-                        width: 1000,
-                        height: 500
+        if (!username || !password) {
+            throw new Error('Variables BLUESKY_USERNAME e BLUESKY_PASSWORD not defined');
+        }
+
+        const fileData = await readFileAsUint8Array(image)
+        
+        const { data } = await agent.uploadBlob(fileData, { encoding });
+
+        if (!data || !data.blob) {
+            throw new Error('UploadBlob does not contain expected blob');
+        }
+
+        await agent.post({
+            text: "🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨",
+            embed: {
+                $type: 'app.bsky.embed.images',
+                images: [
+                    {
+                        alt: 'Imagem de um mico leão dourado com as palavras: MEIA NOITE!!, HORÁRIO OFICIAL DO ÓLEO DE MACACO',
+                        image: data.blob,
+                        aspecRatio: {
+                            width: 1000,
+                            height: 500
+                        }
                     }
-                }
-            ],
-        },
-        createdAt: new Date().toISOString()
-    });
-    console.log("Just posted!")
+                ],
+            },
+            createdAt: new Date().toISOString()
+        });
+        console.log("Just posted!")
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error('Error while executing main function:', error.message);
+        } else {
+            console.error('Unknown Error while executing main function:', String(error));
+        }
+    }
 }
 
 // main();

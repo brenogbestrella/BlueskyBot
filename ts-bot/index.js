@@ -75,20 +75,30 @@ function readFileAsUint8Array(filePath) {
 var agent = new BskyAgent({
     service: 'https://bsky.social',
 });
+var username = process.env.BLUESKY_USERNAME;
+var password = process.env.BLUESKY_PASSWORD;
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var fileData, data;
+        var fileData, data, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, agent.login({ identifier: process.env.BLUESKY_USERNAME, password: process.env.BLUESKY_PASSWORD })];
+                case 0:
+                    _a.trys.push([0, 5, , 6]);
+                    return [4 /*yield*/, agent.login({ identifier: username, password: password })];
                 case 1:
                     _a.sent();
+                    if (!username || !password) {
+                        throw new Error('Variables BLUESKY_USERNAME e BLUESKY_PASSWORD not defined');
+                    }
                     return [4 /*yield*/, readFileAsUint8Array(image)];
                 case 2:
                     fileData = _a.sent();
                     return [4 /*yield*/, agent.uploadBlob(fileData, { encoding: encoding })];
                 case 3:
                     data = (_a.sent()).data;
+                    if (!data || !data.blob) {
+                        throw new Error('UploadBlob does not contain expected blob');
+                    }
                     return [4 /*yield*/, agent.post({
                             text: "🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨",
                             embed: {
@@ -109,7 +119,17 @@ function main() {
                 case 4:
                     _a.sent();
                     console.log("Just posted!");
-                    return [2 /*return*/];
+                    return [3 /*break*/, 6];
+                case 5:
+                    error_2 = _a.sent();
+                    if (error_2 instanceof Error) {
+                        console.error('Error while executing main function:', error_2.message);
+                    }
+                    else {
+                        console.error('Unknown Error while executing main function:', String(error_2));
+                    }
+                    return [3 /*break*/, 6];
+                case 6: return [2 /*return*/];
             }
         });
     });

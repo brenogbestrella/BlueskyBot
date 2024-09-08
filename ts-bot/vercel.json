@@ -2,7 +2,7 @@
     "crons": [
       {
         "path": "/api/cron/ts-bot",
-        "schedule": "20 14 * * *"
+        "schedule": "35 14 * * *"
       }
     ]
 }
